@@ -1,5 +1,6 @@
-#include <iostream>
+#include "Expine/Application.h"
 
-int main(int, char**) {
-    std::cout << "Hello, world!\n";
+int main(int argc, char** argv) {
+    auto app = new Expine::Application();
+    delete app;
 }
