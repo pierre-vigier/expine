@@ -3,26 +3,33 @@
 
 namespace Expine
 {
-    Application* Application::s_Instance = nullptr;
-    
-    Application::Application() 
+    //Application* Application::s_Instance = nullptr;
+
+    Application::Application(const std::string& title)
+        :m_Title(title) 
     {
         std::cout << "Application created" << std::endl;
 
-        s_Instance = this;
+        //s_Instance = this;
 
         int status = glfwInit();
         if( !status ) {
             //Do something
         }
         //glfwSetErrorCallback();
-        m_Window = glfwCreateWindow( 960, 540, "Untitled", nullptr, nullptr);
+        m_Window = glfwCreateWindow( 960, 540, m_Title.c_str(), nullptr, nullptr);
         if(!m_Window) {
             // Do something
         }
         glfwMakeContextCurrent(m_Window);
-        glfwSwapInterval(1);
+        //glfwSwapInterval(1);
 
+        glfwSetWindowUserPointer(m_Window, this);
+
+        glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* w) {
+            auto app = (Application*)glfwGetWindowUserPointer(w);
+            app->m_IsRunning = false;
+        });
         //Initialize GLEW
 
     }
@@ -37,7 +44,8 @@ namespace Expine
     void Application::Run() 
     {
         while( m_IsRunning ) {
-            std::cout << "Application Running" << std::endl; 
+            glfwPollEvents();
+            glfwSwapBuffers(m_Window);
         }
     }
 }
