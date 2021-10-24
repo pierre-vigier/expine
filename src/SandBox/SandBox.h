@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Expine/Application.h"
+#include "Expine.h"
 
 using namespace Expine;
 class SandBox : public Application

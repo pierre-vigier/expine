@@ -1,4 +1,5 @@
 #include "Application.h"
+#include "Log.h"
 #include <iostream>
 
 namespace Expine
@@ -8,7 +9,8 @@ namespace Expine
     Application::Application(const std::string& title)
         :m_Title(title) 
     {
-        std::cout << "Application created" << std::endl;
+        Log::Init();
+        XP_LOG_INFO("Application created");
 
         //s_Instance = this;
 
@@ -36,7 +38,7 @@ namespace Expine
     
     Application::~Application() 
     {
-        std::cout << "Application destroyed" << std::endl;
+        XP_LOG_INFO("Application destroyed");
         glfwDestroyWindow(m_Window);
         glfwTerminate();
     }

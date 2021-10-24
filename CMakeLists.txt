@@ -16,8 +16,10 @@ add_executable(
     expine
     src/main.cpp
     src/Expine/Application.cpp
+    src/Expine/Log.cpp
 )
 target_compile_features(expine PRIVATE cxx_std_17)
+target_include_directories(expine PUBLIC src/Expine)
 # target_compile_definitions(expine
 #     PUBLIC
 #         SPDLOG_COMPILED_LIB
