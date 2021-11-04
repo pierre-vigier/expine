@@ -32,8 +32,56 @@ namespace Expine
             auto app = (Application*)glfwGetWindowUserPointer(w);
             app->m_IsRunning = false;
         });
-        //Initialize GLEW
 
+        // glfwSetCharCallback(m_Window,[](GLFWwindow* w, unsigned int c) {
+        //     auto app = (Application*)glfwGetWindowUserPointer(w);
+        //     XP_LOG_INFO("key pressed");
+        // });
+        //Initialize GLEeW
+        glfwSetKeyCallback(m_Window,[](GLFWwindow *w, int key, int scancode, int action, int mods){
+            auto app = (Application*)glfwGetWindowUserPointer(w);
+            switch (action)
+            {
+            case GLFW_PRESS:
+                XP_LOG_INFO("key pressed");
+                break;
+            case GLFW_RELEASE:
+                XP_LOG_INFO("key released");
+                break;
+            case GLFW_REPEAT:
+                XP_LOG_INFO("key repeat");
+                break;
+            
+            default:
+                break;
+            }
+        });
+        glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* w, int button, int action, int mods)
+		{
+			auto& app = *(Application*)glfwGetWindowUserPointer(w);
+
+			switch (action)
+			{
+				case GLFW_PRESS:
+				{
+                    XP_LOG_INFO("Mouse button pressed");
+					break;
+				}
+				case GLFW_RELEASE:
+				{
+                    XP_LOG_INFO("Mouse button released");
+					break;
+				}
+			}
+		});
+
+
+		glfwSetCursorPosCallback(m_Window, [](GLFWwindow* w, double xPos, double yPos)
+		{
+			auto& app = *(Application*)glfwGetWindowUserPointer(w);
+            XP_LOG_INFO("Mouse cursor at : {}, {}",xPos,yPos);
+
+		});
     }
     
     Application::~Application() 
