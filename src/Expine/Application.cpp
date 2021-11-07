@@ -1,5 +1,6 @@
 #include "Application.h"
 #include "Log.h"
+#include "Event.h"
 #include <iostream>
 
 namespace Expine
@@ -29,24 +30,20 @@ namespace Expine
         glfwSetWindowUserPointer(m_Window, this);
 
         glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* w) {
-            auto app = (Application*)glfwGetWindowUserPointer(w);
-            app->m_IsRunning = false;
+            auto& app = *(Application*)glfwGetWindowUserPointer(w);
+            app.m_IsRunning = false;
         });
 
-        // glfwSetCharCallback(m_Window,[](GLFWwindow* w, unsigned int c) {
-        //     auto app = (Application*)glfwGetWindowUserPointer(w);
-        //     XP_LOG_INFO("key pressed");
-        // });
         //Initialize GLEeW
         glfwSetKeyCallback(m_Window,[](GLFWwindow *w, int key, int scancode, int action, int mods){
             auto app = (Application*)glfwGetWindowUserPointer(w);
             switch (action)
             {
             case GLFW_PRESS:
-                XP_LOG_INFO("key pressed");
+                app->HandleEvent(KeyPressedEvent(key));
                 break;
             case GLFW_RELEASE:
-                XP_LOG_INFO("key released");
+                app->HandleEvent(KeyReleasedEvent(key));
                 break;
             case GLFW_REPEAT:
                 XP_LOG_INFO("key repeat");
@@ -64,12 +61,12 @@ namespace Expine
 			{
 				case GLFW_PRESS:
 				{
-                    XP_LOG_INFO("Mouse button pressed");
+                    app.HandleEvent(MouseButtonPressedEvent(button));
 					break;
 				}
 				case GLFW_RELEASE:
 				{
-                    XP_LOG_INFO("Mouse button released");
+                    app.HandleEvent(MouseButtonReleasedEvent(button));
 					break;
 				}
 			}
@@ -79,8 +76,7 @@ namespace Expine
 		glfwSetCursorPosCallback(m_Window, [](GLFWwindow* w, double xPos, double yPos)
 		{
 			auto& app = *(Application*)glfwGetWindowUserPointer(w);
-            XP_LOG_INFO("Mouse cursor at : {}, {}",xPos,yPos);
-
+            app.HandleEvent(MouseMovedEvent(xPos,yPos));
 		});
     }
     
@@ -89,6 +85,11 @@ namespace Expine
         XP_LOG_INFO("Application destroyed");
         glfwDestroyWindow(m_Window);
         glfwTerminate();
+    }
+
+    void Application::HandleEvent(const Event &e) 
+    {
+        XP_LOG_INFO("Event catched {}", e.GetName());
     }
     
     void Application::Run() 

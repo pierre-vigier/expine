@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GLFW/glfw3.h"
+#include "Event.h"
 
 #include <string>
 
@@ -9,8 +10,10 @@ namespace Expine {
     {
     public:
         Application(const std::string& title);
+        Application(const Application &a) = delete;
         ~Application();
 
+        void HandleEvent(const Event &e);
         void Run();
     private:
         std::string m_Title;
