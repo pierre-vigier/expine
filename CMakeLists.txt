@@ -6,11 +6,12 @@ project(
 set(CMAKE_CXX_STANDARD 17)
 
 find_package(glfw3 REQUIRED)
+find_package(OpenGL REQUIRED)
+find_package(GLEW 1.13 REQUIRED)
 
 add_subdirectory(vendor/spdlog)
-# set(spdlog_DIR vendor/spdlog)
-#find_package(spdlog)
-# add_subdirectory(vendor/glm)
+
+add_subdirectory(vendor/glm)
 
 add_executable(
     expine
@@ -19,11 +20,6 @@ add_executable(
     src/Expine/Log.cpp
 )
 target_compile_features(expine PRIVATE cxx_std_17)
-target_include_directories(expine PUBLIC src/Expine)
-# target_compile_definitions(expine
-#     PUBLIC
-#         SPDLOG_COMPILED_LIB
-#         SPDLOG_FMT_EXTERNAL
-# )
-target_link_libraries(expine PUBLIC glfw spdlog_header_only)
+target_include_directories(expine PUBLIC src/Expine src/OpenGL)
+target_link_libraries(expine PUBLIC glfw spdlog_header_only OpenGL::GL GLEW::GLEW glm dl)
 # imgui dl)

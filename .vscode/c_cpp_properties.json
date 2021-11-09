@@ -4,7 +4,8 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/vendor/spdlog/include"
+                "${workspaceFolder}/vendor/spdlog",
+                "${workspaceFolder}/vendor/glm"
             ],
             "defines": [],
             "cStandard": "gnu17",
