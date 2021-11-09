@@ -5,7 +5,9 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/vendor/spdlog",
-                "${workspaceFolder}/vendor/glm"
+                "${workspaceFolder}/vendor/glm",
+                "${workspaceFolder}/vendor/glm",
+                "${workspaceFolder}/vendor"
             ],
             "defines": [],
             "cStandard": "gnu17",
