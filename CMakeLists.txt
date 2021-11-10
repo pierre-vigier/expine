@@ -28,6 +28,7 @@ add_executable(
     src/OpenGL/VertexBufferLayout.cpp
     src/OpenGL/Shader.cpp
     src/OpenGL/Texture.cpp
+    src/SandBox/SandBox.cpp
 )
 target_compile_features(expine PRIVATE cxx_std_17)
 target_include_directories(expine PUBLIC src/Expine src/OpenGL)

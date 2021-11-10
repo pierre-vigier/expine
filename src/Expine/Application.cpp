@@ -20,7 +20,9 @@ namespace Expine
         {
             //Do something
         }
-        //glfwSetErrorCallback();
+        glfwSetErrorCallback([](int error, const char* desc){
+            XP_LOG_INFO("GLFW Error {}: {}", error, desc);
+        });
 
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -120,6 +122,7 @@ namespace Expine
         while (m_IsRunning)
         {
             glfwPollEvents();
+            OnUpdate();
             glfwSwapBuffers(m_Window);
         }
     }

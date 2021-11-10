@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <filesystem>
 
 #include "Renderer.h"
 
@@ -48,7 +49,7 @@ ShaderProgranmSource Shader::ParseShader(const std::string& filepath)
     enum class ShaderType{
         NONE = -1, VERTEX = 0, FRAGMENT = 1
     };
-
+    std::cout << "Current working directory: " << std::filesystem::current_path() << std::endl;
     ShaderType type = ShaderType::NONE;
 
     while(getline(stream,line))

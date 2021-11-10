@@ -16,6 +16,7 @@ namespace Expine {
 
         void HandleEvent(const Event &e);
         void Run();
+        virtual void OnUpdate() {};
     private:
         std::string m_Title;
         bool m_IsRunning = true;
