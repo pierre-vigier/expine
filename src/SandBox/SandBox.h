@@ -6,6 +6,7 @@
 #include "VertexBuffer.h"
 #include "Shader.h"
 #include "IndexBuffer.h"
+#include "Texture.h"
 
 using namespace Expine;
 class SandBox : public Application
@@ -30,4 +31,5 @@ public:
     std::shared_ptr<VertexBuffer> m_Vb;
     std::shared_ptr<IndexBuffer> m_Ib;
     std::shared_ptr<Shader> m_Shader;
+    std::shared_ptr<Texture> m_Texture;
 };
