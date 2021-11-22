@@ -1,8 +1,7 @@
 #pragma once
 
-#include <GL/glew.h>
-#include "GLFW/glfw3.h"
 #include "Event.h"
+#include "Window.h"
 
 #include <string>
 
@@ -20,7 +19,7 @@ namespace Expine {
     private:
         std::string m_Title;
         bool m_IsRunning = true;
-        GLFWwindow* m_Window;
+        Window *m_Window;
     //private:
     //    static Application* s_Instance;
     };
