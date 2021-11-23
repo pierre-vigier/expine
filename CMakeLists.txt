@@ -16,6 +16,30 @@ add_subdirectory(vendor/glm)
 add_library(stb_image vendor/stb_image/stb_image.cpp)
 target_include_directories(stb_image PUBLIC vendor/stb_image)
 
+set(IMGUI_DIR ${CMAKE_CURRENT_SOURCE_DIR}/vendor/imgui)
+
+add_library(imgui 
+    ${IMGUI_DIR}/imgui.cpp
+    ${IMGUI_DIR}/imgui_demo.cpp
+    ${IMGUI_DIR}/imgui_draw.cpp
+    ${IMGUI_DIR}/imgui_tables.cpp
+    ${IMGUI_DIR}/imgui_widgets.cpp
+    ${IMGUI_DIR}/backends/imgui_impl_glfw.cpp
+    ${IMGUI_DIR}/backends/imgui_impl_opengl3.cpp
+)
+target_include_directories (
+	imgui
+	PUBLIC ${IMGUI_DIR}
+  PUBLIC ${INGUI_DIR}/backends/
+)
+
+target_link_libraries (
+	imgui
+
+	PUBLIC
+	glfw
+	OpenGL::GL
+)
 add_executable(
     expine
     src/main.cpp
@@ -33,5 +57,5 @@ add_executable(
 )
 target_compile_features(expine PRIVATE cxx_std_17)
 target_include_directories(expine PUBLIC src/Expine src/OpenGL)
-target_link_libraries(expine PUBLIC stb_image glfw spdlog_header_only OpenGL::GL GLEW::GLEW glm dl)
+target_link_libraries(expine PUBLIC stb_image glfw spdlog_header_only OpenGL::GL GLEW::GLEW glm imgui dl)
 # imgui dl)

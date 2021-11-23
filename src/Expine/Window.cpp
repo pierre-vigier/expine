@@ -2,6 +2,10 @@
 #include "Log.h"
 #include "Event.h"
 
+#include "imgui.h"
+#include "backends/imgui_impl_glfw.h"
+#include "backends/imgui_impl_opengl3.h"
+
 namespace Expine
 {
     Window::Window(const std::string &title)
@@ -111,12 +115,28 @@ namespace Expine
                                      MouseMovedEvent e(xPos, yPos);
                                      win.EventCallbackFunc(e);
                                  });
-        
+        const char* glsl_version = "#version 130";
+    //IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGui::StyleColorsDark();
+    ImGui_ImplGlfw_InitForOpenGL(m_Window,true);
+    ImGui_ImplOpenGL3_Init(glsl_version);
     }
 
     void Window::OnUpdate() 
     {
         glfwPollEvents();
+          ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+
+
+        ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
+        ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
+        ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+        ImGui::End();
+        ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData()); 
         glfwSwapBuffers(m_Window);
     }
     
