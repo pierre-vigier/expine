@@ -12,6 +12,8 @@ namespace Expine
     public:
         virtual const char* GetName() const = 0;
         virtual const bool OfType(const EventType &t) const = 0;
+    public:
+        bool Handled = false;
     };
 
     class KeyPressedEvent: public Event

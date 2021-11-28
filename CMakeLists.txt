@@ -44,6 +44,7 @@ add_executable(
     expine
     src/main.cpp
     src/Expine/Application.cpp
+    src/Expine/Layer.cpp
     src/Expine/Window.cpp
     src/Expine/Log.cpp
     src/OpenGL/Renderer.cpp

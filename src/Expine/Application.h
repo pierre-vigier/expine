@@ -2,8 +2,10 @@
 
 #include "Event.h"
 #include "Window.h"
+#include "Layer.h"
 
 #include <string>
+#include <vector>
 
 namespace Expine {
     class Application
@@ -13,14 +15,14 @@ namespace Expine {
         Application(const Application &a) = delete;
         ~Application();
 
-        void HandleEvent(const Event &e);
+        void HandleEvent(Event &e);
         void Run();
-        virtual void OnUpdate() {};
+
+        void PushLayer(Layer *layout);
     private:
         std::string m_Title;
         bool m_IsRunning = true;
         Window *m_Window;
-    //private:
-    //    static Application* s_Instance;
+        std::vector<Layer *> m_Layers;
     };
 }

@@ -14,7 +14,7 @@ namespace Expine
         Init();
     }
 
-    void Window::SetEventCallback(std::function<void(const Event &)> fc)
+    void Window::SetEventCallback(std::function<void(Event &)> fc)
     {
         EventCallbackFunc = fc;
     }

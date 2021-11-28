@@ -11,7 +11,7 @@ namespace Expine {
     public:
         Window(const std::string &title);
 
-        void SetEventCallback(std::function<void(const Event &)> fc);
+        void SetEventCallback(std::function<void(Event &)> fc);
         void OnUpdate();
         void OnShutdown();
     private:

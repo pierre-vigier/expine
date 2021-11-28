@@ -16,21 +16,30 @@ namespace Expine
 
         //create a window
         m_Window = new Window(title);
-        m_Window->SetEventCallback([this](const Event &e){HandleEvent(e);});
+        m_Window->SetEventCallback([this](Event &e){HandleEvent(e);});
     }
 
     Application::~Application()
     {
         XP_LOG_INFO("Application destroyed");
         m_Window->OnShutdown();
+        for(auto *l : m_Layers) {
+            delete l;
+        }
         delete m_Window;
     }
 
-    void Application::HandleEvent(const Event &e)
+    void Application::HandleEvent(Event &e)
     {
-        XP_LOG_INFO("Event catched {}", e.GetName());
         if( e.OfType(EventType::WindowsClosedEvent) ) {
             m_IsRunning = false;
+            e.Handled = true;
+        }
+        for(auto it = m_Layers.rbegin(); it != m_Layers.rend(); it++ ) {
+            XP_LOG_INFO("Processing event , sending to layers");
+            (*it)->HandleEvent(e);
+            if( e.Handled )
+                break;
         }
     }
 
@@ -38,8 +47,18 @@ namespace Expine
     {
         while (m_IsRunning)
         {
-            OnUpdate();
+            glClearColor(1.0, 0.0, 0.0, 1.0);
+            glClear(GL_COLOR_BUFFER_BIT);
+            for(auto *l : m_Layers) {
+                l->OnUpdate();
+            }
             m_Window->OnUpdate();
         }
+    }
+    
+    void Application::PushLayer(Layer *layer) 
+    {
+        m_Layers.push_back(layer);
+        layer->OnMount();
     }
 }
