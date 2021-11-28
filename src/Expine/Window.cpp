@@ -9,26 +9,25 @@
 namespace Expine
 {
     Window::Window(const std::string &title)
-       : m_Title(title)
+        : m_Title(title)
     {
         Init();
     }
-    
-    void Window::SetEventCallback(std::function<void(const Event &)> fc) 
+
+    void Window::SetEventCallback(std::function<void(const Event &)> fc)
     {
         EventCallbackFunc = fc;
     }
-    
-    void Window::Init() 
+
+    void Window::Init()
     {
         int status = glfwInit();
         if (!status)
         {
             //Do something
         }
-        glfwSetErrorCallback([](int error, const char* desc){
-            XP_LOG_INFO("GLFW Error {}: {}", error, desc);
-        });
+        glfwSetErrorCallback([](int error, const char *desc)
+                             { XP_LOG_INFO("GLFW Error {}: {}", error, desc); });
 
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -61,9 +60,9 @@ namespace Expine
 
         glfwSetWindowCloseCallback(m_Window, [](GLFWwindow *w)
                                    {
-                                        auto win = (Window *)glfwGetWindowUserPointer(w);
-                                        WindowsClosedEvent e;
-                                        win->EventCallbackFunc(e);
+                                       auto win = (Window *)glfwGetWindowUserPointer(w);
+                                       WindowsClosedEvent e;
+                                       win->EventCallbackFunc(e);
                                    });
 
         //Initialize GLEW
@@ -72,15 +71,20 @@ namespace Expine
                                auto win = (Window *)glfwGetWindowUserPointer(w);
                                switch (action)
                                {
-                               case GLFW_PRESS: {
+                               case GLFW_PRESS:
+                               {
                                    KeyPressedEvent e(key);
                                    win->EventCallbackFunc(e);
-                                   break;}
-                               case GLFW_RELEASE:{
+                                   break;
+                               }
+                               case GLFW_RELEASE:
+                               {
                                    KeyReleasedEvent e(key);
                                    win->EventCallbackFunc(e);
-                                   break;}
-                               case GLFW_REPEAT:{
+                                   break;
+                               }
+                               case GLFW_REPEAT:
+                               {
                                    XP_LOG_INFO("key repeat");
                                    break;
                                }
@@ -115,32 +119,45 @@ namespace Expine
                                      MouseMovedEvent e(xPos, yPos);
                                      win.EventCallbackFunc(e);
                                  });
-        const char* glsl_version = "#version 130";
-    //IMGUI_CHECKVERSION();
-    ImGui::CreateContext();
-    ImGui::StyleColorsDark();
-    ImGui_ImplGlfw_InitForOpenGL(m_Window,true);
-    ImGui_ImplOpenGL3_Init(glsl_version);
-    }
+        const char *glsl_version = "#version 130";
+        ImGui::CreateContext();
+        ImGui::StyleColorsDark();
+        //IMGUI_CHECKVERSION();
+        ImGuiIO& io = ImGui::GetIO();
+        //io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
+        //io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+        //io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
+        io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windowss
+        ImGui_ImplGlfw_InitForOpenGL(m_Window, true);
+        ImGui_ImplOpenGL3_Init(glsl_version);
 
-    void Window::OnUpdate() 
+    }
+    void Window::OnUpdate()
     {
         glfwPollEvents();
-          ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
-
-
-        ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
-        ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
+        static bool open = true;
+        ImGui::ShowDemoWindow(&open);
+        ImGui::Begin("Hello, world!");            // Create a window called "Hello, world!" and append into it.
+        ImGui::Text("This is some useful text."); // Display some text (you can use a format strings too)
         ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
         ImGui::End();
         ImGui::Render();
-    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData()); 
+        auto rs = ImGui::GetDrawData();
+        ImGui_ImplOpenGL3_RenderDrawData( rs);
+        if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+        {
+            GLFWwindow* backup_current_context = glfwGetCurrentContext();
+            ImGui::UpdatePlatformWindows();
+            ImGui::RenderPlatformWindowsDefault();
+            glfwMakeContextCurrent(backup_current_context);
+        }
         glfwSwapBuffers(m_Window);
     }
-    
-    void Window::OnShutdown() 
+
+    void Window::OnShutdown()
     {
         glfwDestroyWindow(m_Window);
         glfwTerminate();
