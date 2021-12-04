@@ -1,6 +1,7 @@
 #include "Window.h"
 #include "Log.h"
 #include "Event.h"
+#include "OpenGLContext.h"
 
 #include "imgui.h"
 #include "backends/imgui_impl_glfw.h"
@@ -39,22 +40,11 @@ namespace Expine
         {
             // Do something
         }
-        glfwMakeContextCurrent(m_Window);
+
+        m_Context = new OpenGLContext(m_Window);
+        m_Context->Init();
+
         glfwSwapInterval(1);
-
-        /* Make the window's contect current */
-        glfwMakeContextCurrent(m_Window);
-        glfwSwapInterval(1);
-
-        // Initialize GLEW
-        if (glewInit() != GLEW_OK)
-        {
-            fprintf(stderr, "Failed to initialize GLEW\n");
-            getchar();
-            glfwTerminate();
-        }
-
-        XP_LOG_INFO(glGetString(GL_VERSION));
 
         glfwSetWindowUserPointer(m_Window, this);
 
@@ -154,7 +144,7 @@ namespace Expine
             ImGui::RenderPlatformWindowsDefault();
             glfwMakeContextCurrent(backup_current_context);
         }
-        glfwSwapBuffers(m_Window);
+        m_Context->SwapBuffers();
     }
 
     void Window::OnShutdown()

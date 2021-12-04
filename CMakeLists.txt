@@ -30,7 +30,7 @@ add_library(imgui
 target_include_directories (
 	imgui
 	PUBLIC ${IMGUI_DIR}
-  PUBLIC ${INGUI_DIR}/backends/
+    PUBLIC ${INGUI_DIR}/backends/
 )
 
 target_link_libraries (
@@ -47,6 +47,7 @@ add_executable(
     src/Expine/Layer.cpp
     src/Expine/Window.cpp
     src/Expine/Log.cpp
+    src/OpenGL/OpenGLContext.cpp
     src/OpenGL/Renderer.cpp
     src/OpenGL/VertexBuffer.cpp
     src/OpenGL/IndexBuffer.cpp

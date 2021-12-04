@@ -1,8 +1,8 @@
 #pragma once
-
-#include <GL/glew.h>
+#include <GL/glew.h> // just to include glew before GLFW...
 #include "GLFW/glfw3.h"
 #include "Event.h"
+#include "OpenGLContext.h"
 #include <string>
 #include <functional>
 
@@ -17,6 +17,7 @@ namespace Expine {
     private:
         GLFWwindow *m_Window;
         std::string m_Title;
+        OpenGLContext *m_Context;
     private:
         void Init();
         std::function<void(Event&)> EventCallbackFunc;
