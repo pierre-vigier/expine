@@ -6,7 +6,8 @@
 #include <sstream>
 #include <filesystem>
 
-#include "Renderer.h"
+#include <GL/glew.h>
+
 
 #include "glm/glm.hpp"
 
@@ -19,7 +20,7 @@ Shader::Shader(const std::string& filepath)
 
 Shader::~Shader()
 {
-    GLCall(glDeleteProgram(m_RendererID));
+    glDeleteProgram(m_RendererID);
 }
 
 unsigned int Shader::CreateShader(const std::string& vertexShader, const std::string& fragmentShader) {
@@ -99,32 +100,32 @@ unsigned int Shader::CompileShader(unsigned int type, const std::string& source)
 
 void Shader::Bind() const
 {
-    GLCall(glUseProgram(m_RendererID));
+    glUseProgram(m_RendererID);
 }
 
 void Shader::Unbind() const
 {
-    GLCall(glUseProgram(0));
+    glUseProgram(0);
 }
 
 void Shader::SetUniform4f(const std::string& name, float v0, float v1, float v2, float v3)
 {
-    GLCall(glUniform4f(GetUniformLocation(name), v0, v1, v2, v3));
+    glUniform4f(GetUniformLocation(name), v0, v1, v2, v3);
 }
 
 void Shader::SetUniform1i(const std::string& name, int value) {
-    GLCall(glUniform1i(GetUniformLocation(name), value));
+    glUniform1i(GetUniformLocation(name), value);
 }
 
 void Shader::SetUniformMat4f(const std::string& name, const glm::mat4& matrix) {
-    GLCall(glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, &matrix[0][0]));
+    glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, &matrix[0][0]);
 }
 
 int Shader::GetUniformLocation(const std::string& name)
 {
     if( m_UniformLocationCache.find(name) != m_UniformLocationCache.end())
         return m_UniformLocationCache[name];
-    GLCall(int location = glGetUniformLocation(m_RendererID,name.c_str()));
+    int location = glGetUniformLocation(m_RendererID,name.c_str());
     if (location == -1)
         std::cout << "Warning: uniform '" << name << "' doesn't exist!" <<std::endl;
     
