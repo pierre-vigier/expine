@@ -1,5 +1,6 @@
 #include "SandBox.h"
 
+#include "Renderer/Renderer.h"
 #include "VertexBufferLayout.h"
 
 #include "glm/glm.hpp"
@@ -48,8 +49,6 @@ public:
     }
     void OnUpdate() override
     {
-        Renderer renderer;
-
         glm::mat4 proj = glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f);
         glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(-100, 0, 0));
         glm::vec3 translation(200, 200, 0);
@@ -57,7 +56,7 @@ public:
         glm::mat4 mvp = proj * view * model;
         m_Shader->Bind();
         m_Shader->SetUniformMat4f("u_MVP", mvp);
-        renderer.Draw(*m_Va, *m_Shader);
+        Renderer::Submit(*m_Va, *m_Shader);
     }
     void HandleEvent(Event &e) override {
         XP_LOG_INFO("Processing eventin layer");

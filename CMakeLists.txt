@@ -47,8 +47,11 @@ add_executable(
     src/Expine/Layer.cpp
     src/Expine/Window.cpp
     src/Expine/Log.cpp
+    src/Expine/Renderer/Renderer.cpp
+    src/Expine/Renderer/RenderAPI.cpp
+    src/Expine/Renderer/RenderCommand.cpp
     src/OpenGL/OpenGLContext.cpp
-    src/OpenGL/Renderer.cpp
+    src/OpenGL/OpenGLRenderAPI.cpp
     src/OpenGL/VertexBuffer.cpp
     src/OpenGL/IndexBuffer.cpp
     src/OpenGL/VertexArray.cpp

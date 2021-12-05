@@ -1,12 +1,12 @@
-#include "Renderer.h"
+#include "OpenGLRenderAPI.h"
 
 #include <iostream>
 
-void Renderer::Clear() const{
+void OpenGLRenderAPI::Clear() const{
     glClear( GL_COLOR_BUFFER_BIT );
 }
 
-void Renderer::Draw(const VertexArray& va, const Shader& shader) const
+void OpenGLRenderAPI::Draw(const VertexArray& va, const Shader& shader)
 {
         shader.Bind();
         // shader.SetUniform4f("u_Color" r, 0.5f, 0.0f, 1.0f);

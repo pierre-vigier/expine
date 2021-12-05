@@ -3,9 +3,6 @@
 #include <vector>
 #include <GL/glew.h>
 
-#include "Renderer.h"
-// #include "VertexBuffer.h"
-
 struct VertexBufferElement
 {
     unsigned int type;
@@ -20,7 +17,7 @@ struct VertexBufferElement
             case GL_UNSIGNED_INT:   return sizeof(GLuint);
             case GL_UNSIGNED_BYTE:  return sizeof(GLubyte);
         }
-        ASSERT(false);
+        //TODO : ASSERT(false);
         return 0;
     }
 };
