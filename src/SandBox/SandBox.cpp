@@ -13,6 +13,13 @@ public:
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+    float positions[16] = {
+        100.0f, 100.0f, 0.0f, 0.0f,
+        200.0f, 100.0f, 1.0f, 0.0f,
+        200.0f, 200.0f, 1.0f, 1.0f,
+        100.0f, 200.0f, 0.0f, 1.0f,
+    };
+
         m_Va = std::make_shared<VertexArray>();
         m_Vb = std::make_shared<VertexBuffer>(positions, 4 * 4 * sizeof(float));
 
@@ -21,7 +28,13 @@ public:
         layout.Push<float>(2);
         m_Va->AddBuffer(*m_Vb, layout);
 
+        unsigned int indices[6] = {
+            0, 1, 2,
+            2, 3, 0,
+        };
         m_Ib = std::make_shared<IndexBuffer>(indices, 6);
+
+        m_Va->SetIndexBuffer(m_Ib);
 
         m_Shader = std::make_shared<Shader>("../res/shaders/basic.shader");
 
@@ -44,36 +57,12 @@ public:
         glm::mat4 mvp = proj * view * model;
         m_Shader->Bind();
         m_Shader->SetUniformMat4f("u_MVP", mvp);
-        renderer.Draw(*m_Va, *m_Ib, *m_Shader);
+        renderer.Draw(*m_Va, *m_Shader);
     }
     void HandleEvent(Event &e) override {
         XP_LOG_INFO("Processing eventin layer");
     }
 private:
-    float positions[16] = {
-        100.0f,
-        100.0f,
-        0.0f,
-        0.0f,
-        200.0f,
-        100.0f,
-        1.0f,
-        0.0f,
-        200.0f,
-        200.0f,
-        1.0f,
-        1.0f,
-        100.0f,
-        200.0f,
-        0.0f,
-        1.0f,
-    };
-
-    unsigned int indices[3] = {
-        0,
-        1,
-        2,
-    };
 
     std::shared_ptr<VertexArray> m_Va;
     std::shared_ptr<VertexBuffer> m_Vb;

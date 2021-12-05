@@ -7,13 +7,13 @@
 
 VertexArray::VertexArray()
 {
-    glGenVertexArrays(1, &m_RendereID);
-    glBindVertexArray(m_RendereID);
+    glGenVertexArrays(1, &m_RendererID);
+    glBindVertexArray(m_RendererID);
 }
 
 VertexArray::~VertexArray()
 {
-    glDeleteTransformFeedbacks(1,&m_RendereID);
+    glDeleteTransformFeedbacks(1,&m_RendererID);
 }
 
 void VertexArray::AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& layout)
@@ -34,9 +34,16 @@ void VertexArray::AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& la
 
 }
 
+void VertexArray::SetIndexBuffer(const std::shared_ptr<IndexBuffer>& indexBuffer) 
+{
+    Bind();
+    indexBuffer->Bind();
+    m_IndexBuffer = indexBuffer;
+}
+
 void VertexArray::Bind() const
 {
-    glBindVertexArray(m_RendereID);
+    glBindVertexArray(m_RendererID);
 }
 
 void VertexArray::Unind() const
