@@ -36,7 +36,7 @@ namespace Expine
             e.Handled = true;
         }
         for(auto it = m_Layers.rbegin(); it != m_Layers.rend(); it++ ) {
-            XP_LOG_INFO("Processing event , sending to layers");
+            //XP_LOG_INFO("Processing event , sending to layers");
             (*it)->HandleEvent(e);
             if( e.Handled )
                 break;
@@ -47,8 +47,8 @@ namespace Expine
     {
         while (m_IsRunning)
         {
-            glClearColor(1.0, 0.0, 0.0, 1.0);
-            glClear(GL_COLOR_BUFFER_BIT);
+            glClearColor(0.1, 0.1, 0.1, 1.0);
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             for(auto *l : m_Layers) {
                 l->OnUpdate();
             }

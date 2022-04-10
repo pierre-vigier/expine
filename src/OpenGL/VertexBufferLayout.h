@@ -31,29 +31,11 @@ private:
 public:
     VertexBufferLayout() : m_Stride(0) {}
 
-    template<typename T>
-    void Push(unsigned int count)
-    {
-        // static_assert(false);
-    };
+    void PushFloat(unsigned int count);
 
-    // void PushFloat(unsigned int count)
-    // {
-    //     m_Elements.push_back({GL_FLOAT, count, GL_FALSE});
-    //     m_Stride += VertexBufferElement::GetSizeOfType(GL_FLOAT) * count;
-    // }
+    void PushUInt(unsigned int count);
 
-    // void PushUint(unsigned int count)
-    // {
-    //     m_Elements.push_back({GL_UNSIGNED_INT, count, GL_FALSE});
-    //     m_Stride += VertexBufferElement::GetSizeOfType(GL_UNSIGNED_INT) * count;
-    // }
-
-    // void PushUChar(unsigned int count)
-    // {
-    //     m_Elements.push_back({GL_UNSIGNED_BYTE, count, GL_TRUE});
-    //     m_Stride += VertexBufferElement::GetSizeOfType(GL_UNSIGNED_BYTE) * count;
-    // }
+    void PushUChar(unsigned int count);
 
     inline unsigned int getStride() const { return m_Stride; }
     inline const std::vector<VertexBufferElement> GetElements() const { return m_Elements; }
