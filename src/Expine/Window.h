@@ -14,6 +14,10 @@ namespace Expine {
         void SetEventCallback(std::function<void(Event &)> fc);
         void OnUpdate();
         void OnShutdown();
+        
+        GLFWwindow* GetNativeWindow() {
+            return m_Window;
+        }
     private:
         GLFWwindow *m_Window;
         std::string m_Title;

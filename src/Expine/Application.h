@@ -16,11 +16,17 @@ namespace Expine {
         Application(const Application &a) = delete;
         ~Application();
 
+        //Assumption, one Window per app
+        Window& GetWindow() { return *m_Window; }
+
         void HandleEvent(Event &e);
         void Run();
 
         void PushLayer(Layer *layout);
+
+        static Application& Get() { return *s_Instance; }
     private:
+        static Application* s_Instance;
         std::string m_Title;
         bool m_IsRunning = true;
         Window *m_Window;

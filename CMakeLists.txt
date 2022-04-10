@@ -47,6 +47,7 @@ add_executable(
     src/Expine/Layer.cpp
     src/Expine/Window.cpp
     src/Expine/Log.cpp
+    src/Expine/Renderer/Camera.cpp
     src/Expine/Renderer/Renderer.cpp
     src/Expine/Renderer/RenderAPI.cpp
     src/Expine/Renderer/RenderCommand.cpp

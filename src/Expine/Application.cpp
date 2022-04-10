@@ -6,7 +6,7 @@
 
 namespace Expine
 {
-    //Application* Application::s_Instance = nullptr;
+    Application* Application::s_Instance = nullptr;
 
     Application::Application(const std::string &title)
         : m_Title(title)
@@ -17,6 +17,7 @@ namespace Expine
         //create a window
         m_Window = new Window(title);
         m_Window->SetEventCallback([this](Event &e){HandleEvent(e);});
+        Application::s_Instance = this;
     }
 
     Application::~Application()
@@ -28,7 +29,7 @@ namespace Expine
         }
         delete m_Window;
     }
-
+    
     void Application::HandleEvent(Event &e)
     {
         if( e.OfType(EventType::WindowsClosedEvent) ) {

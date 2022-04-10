@@ -1,6 +1,7 @@
 #include "SandBox.h"
 
 #include "Renderer/Renderer.h"
+#include "Renderer/Camera.h"
 #include "VertexBufferLayout.h"
 
 #include "glm/glm.hpp"
@@ -94,16 +95,18 @@ public:
     }
     void OnUpdate() override
     {
+        m_Camera.OnUpdate();
         static float Angle = 0.0f;
         Angle += 0.01f;
         Angle = fmod(Angle, glm::two_pi<float>());
 
         //glm::mat4 proj = glm::ortho(-2.f, 2.f, -2.f, 2.f, -0.0f, 1.0f);
         glm::mat4 proj = glm::perspective(90.0f, 960.f/540.f, 0.1f, 100.0f);
-        glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, -2.f));
-        glm::vec3 translation(0, 0, 0);
+        //glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0.f));
+        glm::mat4 view = m_Camera.GetMatrix();
+        glm::vec3 translation(0, 0, -2);
         glm::mat4 model = glm::mat4(1.0f);
-        // model = glm::translate(model, translation);
+        model = glm::translate(model, translation);
         model = glm::rotate(model, Angle, glm::vec3(1.0f, 1.0f, 0.0f));
         glm::mat4 mvp = proj * view * model;
         m_Shader->Bind();
@@ -121,6 +124,8 @@ private:
     std::shared_ptr<IndexBuffer> m_Ib;
     std::shared_ptr<Shader> m_Shader;
     std::shared_ptr<Texture> m_Texture;
+
+    PerspectiveCamera m_Camera{};
 };
 
 SandBox::SandBox(const std::string &name) : Application(name)
