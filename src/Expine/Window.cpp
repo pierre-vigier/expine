@@ -109,7 +109,7 @@ namespace Expine
                                      MouseMovedEvent e(xPos, yPos);
                                      win.EventCallbackFunc(e);
                                  });
-        const char *glsl_version = "#version 130";
+        const char *glsl_version = "#version 330";
         ImGui::CreateContext();
         ImGui::StyleColorsDark();
         //IMGUI_CHECKVERSION();

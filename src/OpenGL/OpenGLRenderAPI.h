@@ -13,6 +13,6 @@
 
 class OpenGLRenderAPI : public Expine::RenderAPI {
 public:
-    void Clear() const;
+    void Clear() const override;
     virtual void Draw(const VertexArray& va, const Shader& shader) override;
 };
