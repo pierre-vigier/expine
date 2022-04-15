@@ -2,6 +2,7 @@
 
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
+#include "Event.h"
 
 namespace Expine {
     class PerspectiveCamera
@@ -14,6 +15,8 @@ namespace Expine {
         glm::mat4 GetMatrix();
 
         void OnUpdate();
+
+        void HandleEvent(Event &e);
     private:
         void computeDirection();
 

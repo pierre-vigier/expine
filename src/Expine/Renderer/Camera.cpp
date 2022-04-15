@@ -1,6 +1,6 @@
 #include "Camera.h"
 #include "Input.h"
-
+#include <iostream>
 namespace Expine
 {
     PerspectiveCamera::PerspectiveCamera() : m_Position(glm::vec3(0.0f)),
@@ -61,10 +61,20 @@ namespace Expine
             computeDirection();
         }
     }
+    
+    void PerspectiveCamera::HandleEvent(Event& e)
+    {
+        if( e.OfType(EventType::WindowResizedEvent) ) {
+            auto wre = static_cast<WindowResizedEvent&>(e);
+            std::cout << "Windows resized " << wre.getWidth() << " * " << wre.getHeight() << std::endl;
+            m_Projection = glm::perspective(70.0f, (float)wre.getWidth() / (float)wre.getHeight(), 0.1f, 1000.f);
+        }
+    }
 
     void PerspectiveCamera::computeDirection() {
         m_Direction.x = cos(glm::radians(m_Angle));
         m_Direction.z = sin(glm::radians(m_Angle));
         m_Direction = glm::normalize(m_Direction);
     }
+    
 }

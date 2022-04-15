@@ -116,6 +116,7 @@ public:
     void HandleEvent(Event &e) override
     {
         // XP_LOG_INFO("Processing eventin layer");
+        m_Camera.HandleEvent(e);
     }
 
 private:

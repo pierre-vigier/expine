@@ -55,6 +55,14 @@ namespace Expine
                                        win->EventCallbackFunc(e);
                                    });
 
+        glfwSetWindowSizeCallback(m_Window, [](GLFWwindow *w, int width, int height)
+        {
+            auto win = (Window *)glfwGetWindowUserPointer(w);
+            WindowResizedEvent e(width,height);
+            win->EventCallbackFunc(e);
+            glViewport(0,0, width, height);
+        });
+
         //Initialize GLEW
         glfwSetKeyCallback(m_Window, [](GLFWwindow *w, int key, int scancode, int action, int mods)
                            {
