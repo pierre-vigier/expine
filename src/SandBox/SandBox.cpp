@@ -101,14 +101,14 @@ public:
         Angle = fmod(Angle, glm::two_pi<float>());
 
         //glm::mat4 proj = glm::ortho(-2.f, 2.f, -2.f, 2.f, -0.0f, 1.0f);
-        glm::mat4 proj = glm::perspective(90.0f, 960.f/540.f, 0.1f, 100.0f);
+        //glm::mat4 proj = glm::perspective(90.0f, 960.f/540.f, 0.1f, 100.0f);
         //glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0.f));
-        glm::mat4 view = m_Camera.GetMatrix();
+        glm::mat4 viewProjection = m_Camera.GetMatrix();
         glm::vec3 translation(0, 0, -2);
         glm::mat4 model = glm::mat4(1.0f);
         model = glm::translate(model, translation);
         model = glm::rotate(model, Angle, glm::vec3(1.0f, 1.0f, 0.0f));
-        glm::mat4 mvp = proj * view * model;
+        glm::mat4 mvp = viewProjection * model;
         m_Shader->Bind();
         m_Shader->SetUniformMat4f("u_MVP", mvp);
         Renderer::Submit(*m_Va, *m_Shader);

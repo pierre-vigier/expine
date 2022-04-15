@@ -15,8 +15,14 @@ namespace Expine {
 
         void OnUpdate();
     private:
+        void computeDirection();
+
+        glm::mat4 m_Projection;
         glm::vec3 m_Position;
         glm::vec3 m_Direction;
         glm::vec3 m_Up;
+        float m_MoveSpeed = 1.0f;
+        float m_RotateSpeed = 1.0f;
+        float m_Angle = 0;
     };
 }
