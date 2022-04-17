@@ -48,10 +48,13 @@ namespace Expine
     {
         while (m_IsRunning)
         {
+            float currentTime = glfwGetTime();
+            float delta = currentTime - m_lastFrameTime;
+            m_lastFrameTime = currentTime;
             glClearColor(0.1, 0.1, 0.1, 1.0);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             for(auto *l : m_Layers) {
-                l->OnUpdate();
+                l->OnUpdate(delta);
             }
             m_Window->OnUpdate();
         }

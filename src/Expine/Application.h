@@ -31,5 +31,8 @@ namespace Expine {
         bool m_IsRunning = true;
         Window *m_Window;
         std::vector<Layer *> m_Layers;
+
+        // time management
+        float m_lastFrameTime = 0.f;
     };
 }

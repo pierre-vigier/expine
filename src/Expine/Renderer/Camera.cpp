@@ -22,29 +22,29 @@ namespace Expine
         // return glm::lookAt(m_Position,m_Position + m_Direction ,m_Up) * m_Projection;
     }
 
-    void PerspectiveCamera::OnUpdate()
+    void PerspectiveCamera::OnUpdate(float elapsed)
     {
         if (Input::IsKeyPressed(GLFW_KEY_W))
         {
-            m_Position += m_Direction * m_MoveSpeed;
+            m_Position += m_Direction * m_MoveSpeed * elapsed;
         }
         if (Input::IsKeyPressed(GLFW_KEY_S))
         {
-            m_Position -= m_Direction * m_MoveSpeed;
+            m_Position -= m_Direction * m_MoveSpeed * elapsed;
         }
         if (Input::IsKeyPressed(GLFW_KEY_D))
         {
             auto right = glm::normalize(glm::cross(m_Direction, m_Up));
-            m_Position += right * m_MoveSpeed;
+            m_Position += right * m_MoveSpeed * elapsed;
         }
         if (Input::IsKeyPressed(GLFW_KEY_A))
         {
             auto right = glm::normalize(glm::cross(m_Direction, m_Up));
-            m_Position -= right * m_MoveSpeed;
+            m_Position -= right * m_MoveSpeed * elapsed;
         }
         if (Input::IsKeyPressed(GLFW_KEY_E))
         {
-            m_Angle += m_RotateSpeed;
+            m_Angle += m_RotateSpeed * elapsed;
             if (m_Angle > 180)
             {
                 m_Angle -= 360;
@@ -53,7 +53,7 @@ namespace Expine
         }
         if (Input::IsKeyPressed(GLFW_KEY_Q))
         {
-            m_Angle-=m_RotateSpeed;
+            m_Angle-=m_RotateSpeed * elapsed;
             if (m_Angle < -180)
             {
                 m_Angle += 360;

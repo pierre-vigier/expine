@@ -13,7 +13,7 @@ namespace Expine {
         Layer(const Layer &l) = delete;
         virtual ~Layer();
 
-        virtual void OnUpdate() {};
+        virtual void OnUpdate(float elapsed) {};
         virtual void HandleEvent(Event &e) {};
         virtual void OnMount() {};
         virtual void OnUnmount() {};

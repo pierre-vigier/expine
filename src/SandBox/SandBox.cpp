@@ -93,9 +93,9 @@ public:
     void OnUnmount() override
     {
     }
-    void OnUpdate() override
+    void OnUpdate(float elapsed) override
     {
-        m_Camera.OnUpdate();
+        m_Camera.OnUpdate(elapsed);
         static float Angle = 0.0f;
         Angle += 0.01f;
         Angle = fmod(Angle, glm::two_pi<float>());

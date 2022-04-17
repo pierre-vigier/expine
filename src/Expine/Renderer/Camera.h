@@ -14,7 +14,7 @@ namespace Expine {
 
         glm::mat4 GetMatrix();
 
-        void OnUpdate();
+        void OnUpdate(float elapsed);
 
         void HandleEvent(Event &e);
     private:
@@ -25,7 +25,7 @@ namespace Expine {
         glm::vec3 m_Direction;
         glm::vec3 m_Up;
         float m_MoveSpeed = 1.0f;
-        float m_RotateSpeed = 1.0f;
+        float m_RotateSpeed = 30.0f;
         float m_Angle = 0;
     };
 }
