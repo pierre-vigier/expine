@@ -117,6 +117,9 @@ namespace Expine
                                      MouseMovedEvent e(xPos, yPos);
                                      win.EventCallbackFunc(e);
                                  });
+        
+        glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
         const char *glsl_version = "#version 330";
         ImGui::CreateContext();
         ImGui::StyleColorsDark();

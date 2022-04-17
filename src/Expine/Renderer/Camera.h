@@ -26,6 +26,7 @@ namespace Expine {
         glm::vec3 m_Up;
         float m_MoveSpeed = 1.0f;
         float m_RotateSpeed = 30.0f;
+        float m_Sensitivity = 0.1f;
         float m_Angle = 0;
     };
 }

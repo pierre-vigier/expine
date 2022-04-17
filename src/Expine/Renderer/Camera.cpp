@@ -1,5 +1,6 @@
 #include "Camera.h"
 #include "Input.h"
+#include "Log.h"
 #include <iostream>
 namespace Expine
 {
@@ -45,36 +46,45 @@ namespace Expine
         if (Input::IsKeyPressed(GLFW_KEY_E))
         {
             m_Angle += m_RotateSpeed * elapsed;
-            if (m_Angle > 180)
-            {
-                m_Angle -= 360;
-            }
-            computeDirection();
         }
         if (Input::IsKeyPressed(GLFW_KEY_Q))
         {
-            m_Angle-=m_RotateSpeed * elapsed;
-            if (m_Angle < -180)
-            {
-                m_Angle += 360;
-            }
-            computeDirection();
+            m_Angle -= m_RotateSpeed * elapsed;
         }
+
+        // check mouse coordinates
+        glm::vec2 mPos = Input::GetMousePosition();
+        static float lastMx = mPos.x;
+        static float lastMy = mPos.y;
+        float xOffset = lastMx - mPos.x;
+        lastMx = mPos.x;
+        m_Angle += xOffset * m_Sensitivity;
+        if (m_Angle > 180)
+        {
+            m_Angle -= 360;
+        }
+        if (m_Angle < -180)
+        {
+            m_Angle += 360;
+        }
+        computeDirection();
     }
-    
-    void PerspectiveCamera::HandleEvent(Event& e)
+
+    void PerspectiveCamera::HandleEvent(Event &e)
     {
-        if( e.OfType(EventType::WindowResizedEvent) ) {
-            auto wre = static_cast<WindowResizedEvent&>(e);
+        if (e.OfType(EventType::WindowResizedEvent))
+        {
+            auto wre = static_cast<WindowResizedEvent &>(e);
             std::cout << "Windows resized " << wre.getWidth() << " * " << wre.getHeight() << std::endl;
             m_Projection = glm::perspective(70.0f, (float)wre.getWidth() / (float)wre.getHeight(), 0.1f, 1000.f);
         }
     }
 
-    void PerspectiveCamera::computeDirection() {
+    void PerspectiveCamera::computeDirection()
+    {
         m_Direction.x = cos(glm::radians(m_Angle));
         m_Direction.z = sin(glm::radians(m_Angle));
         m_Direction = glm::normalize(m_Direction);
     }
-    
+
 }
