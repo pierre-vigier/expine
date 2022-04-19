@@ -6,7 +6,7 @@ namespace Expine
 {
     PerspectiveCamera::PerspectiveCamera() : m_Position(glm::vec3(0.0f)),
                                              m_Up(glm::vec3(0.0f, 1.0f, 0.f)),
-                                             m_Angle(180.f),
+                                             m_Yaw(180.f),
                                              m_Projection(glm::perspective(70.0f, 960.f / 540.f, 0.1f, 1000.f))
     {
         computeDirection();
@@ -45,27 +45,38 @@ namespace Expine
         }
         if (Input::IsKeyPressed(GLFW_KEY_E))
         {
-            m_Angle += m_RotateSpeed * elapsed;
+            m_Yaw += m_RotateSpeed * elapsed;
         }
         if (Input::IsKeyPressed(GLFW_KEY_Q))
         {
-            m_Angle -= m_RotateSpeed * elapsed;
+            m_Yaw -= m_RotateSpeed * elapsed;
         }
 
         // check mouse coordinates
         glm::vec2 mPos = Input::GetMousePosition();
         static float lastMx = mPos.x;
         static float lastMy = mPos.y;
-        float xOffset = lastMx - mPos.x;
+        float xOffset = mPos.x - lastMx;
         lastMx = mPos.x;
-        m_Angle += xOffset * m_Sensitivity;
-        if (m_Angle > 180)
+        m_Yaw += xOffset * m_Sensitivity;
+        if (m_Yaw > 180)
         {
-            m_Angle -= 360;
+            m_Yaw -= 360;
         }
-        if (m_Angle < -180)
+        if (m_Yaw < -180)
         {
-            m_Angle += 360;
+            m_Yaw += 360;
+        }
+        float yOffset = mPos.y - lastMy;
+        lastMy = mPos.y;
+        m_Pitch += yOffset * m_Sensitivity;
+        if (m_Pitch > 90)
+        {
+            m_Pitch = 90;
+        }
+        if (m_Pitch < -90)
+        {
+            m_Pitch = -90;
         }
         computeDirection();
     }
@@ -82,8 +93,9 @@ namespace Expine
 
     void PerspectiveCamera::computeDirection()
     {
-        m_Direction.x = cos(glm::radians(m_Angle));
-        m_Direction.z = sin(glm::radians(m_Angle));
+        m_Direction.x = cos(glm::radians(m_Yaw)) * cos(glm::radians(m_Pitch));
+        m_Direction.z = sin(glm::radians(m_Yaw)) * cos(glm::radians(m_Pitch));
+        m_Direction.y = sin(glm::radians(m_Pitch));
         m_Direction = glm::normalize(m_Direction);
     }
 

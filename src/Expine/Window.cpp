@@ -136,25 +136,25 @@ namespace Expine
     void Window::OnUpdate()
     {
         glfwPollEvents();
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
-        static bool open = true;
-        ImGui::ShowDemoWindow(&open);
-        ImGui::Begin("Hello, world!");            // Create a window called "Hello, world!" and append into it.
-        ImGui::Text("This is some useful text."); // Display some text (you can use a format strings too)
-        ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-        ImGui::End();
-        ImGui::Render();
-        auto rs = ImGui::GetDrawData();
-        ImGui_ImplOpenGL3_RenderDrawData( rs);
-        if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-        {
-            GLFWwindow* backup_current_context = glfwGetCurrentContext();
-            ImGui::UpdatePlatformWindows();
-            ImGui::RenderPlatformWindowsDefault();
-            glfwMakeContextCurrent(backup_current_context);
-        }
+        // ImGui_ImplOpenGL3_NewFrame();
+        // ImGui_ImplGlfw_NewFrame();
+        // ImGui::NewFrame();
+        // static bool open = true;
+        // ImGui::ShowDemoWindow(&open);
+        // ImGui::Begin("Hello, world!");            // Create a window called "Hello, world!" and append into it.
+        // ImGui::Text("This is some useful text."); // Display some text (you can use a format strings too)
+        // ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+        // ImGui::End();
+        // ImGui::Render();
+        // auto rs = ImGui::GetDrawData();
+        // ImGui_ImplOpenGL3_RenderDrawData( rs);
+        // if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+        // {
+            // GLFWwindow* backup_current_context = glfwGetCurrentContext();
+            // ImGui::UpdatePlatformWindows();
+            // ImGui::RenderPlatformWindowsDefault();
+            // glfwMakeContextCurrent(backup_current_context);
+        // }
         m_Context->SwapBuffers();
     }
 
