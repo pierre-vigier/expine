@@ -9,6 +9,7 @@ namespace Expine
         MouseButtonPressedEvent,
         MouseButtonReleasedEvent,
         MouseMovedEvent,
+        MouseScrolledEvent,
         WindowsClosedEvent,
         WindowResizedEvent
     };
@@ -76,6 +77,19 @@ namespace Expine
         MouseMovedEvent(double x, double y) : m_X(x), m_Y(y) {}
         virtual const char *GetName() const override { return "MouseMovedEvent"; }
         virtual const bool OfType(const EventType &t) const override { return t == EventType::MouseMovedEvent; }
+    };
+
+    class MouseScrolledEvent : public Event
+    {
+    private:
+        double m_offsetX, m_offsetY;
+
+    public:
+        MouseScrolledEvent(double offsetX, double offsetY) : m_offsetX(offsetX), m_offsetY(offsetY) {}
+        float getOffsetX() { return m_offsetX;}
+        float getOffsetY() { return m_offsetY;}
+        virtual const char *GetName() const override { return "MouseScrolledEvent"; }
+        virtual const bool OfType(const EventType &t) const override { return t == EventType::MouseScrolledEvent; }
     };
 
     class WindowsClosedEvent : public Event

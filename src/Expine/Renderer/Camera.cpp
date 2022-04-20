@@ -6,7 +6,7 @@ namespace Expine
 {
     PerspectiveCamera::PerspectiveCamera() : m_Position(glm::vec3(0.0f)),
                                              m_Up(glm::vec3(0.0f, 1.0f, 0.f)),
-                                             m_Yaw(180.f),
+                                             m_Yaw(-90.f),
                                              m_Projection(glm::perspective(70.0f, 960.f / 540.f, 0.1f, 1000.f))
     {
         computeDirection();
@@ -69,14 +69,14 @@ namespace Expine
         }
         float yOffset = mPos.y - lastMy;
         lastMy = mPos.y;
-        m_Pitch += yOffset * m_Sensitivity;
-        if (m_Pitch > 90)
+        m_Pitch -= yOffset * m_Sensitivity;
+        if (m_Pitch > 89)
         {
-            m_Pitch = 90;
+            m_Pitch = 89;
         }
-        if (m_Pitch < -90)
+        if (m_Pitch < -89)
         {
-            m_Pitch = -90;
+            m_Pitch = -89;
         }
         computeDirection();
     }
@@ -88,11 +88,16 @@ namespace Expine
             auto wre = static_cast<WindowResizedEvent &>(e);
             std::cout << "Windows resized " << wre.getWidth() << " * " << wre.getHeight() << std::endl;
             m_Projection = glm::perspective(70.0f, (float)wre.getWidth() / (float)wre.getHeight(), 0.1f, 1000.f);
+        } else if (e.OfType(EventType::MouseScrolledEvent)) {
+            auto mse = static_cast<MouseScrolledEvent &>(e);
+            // change zoom level
+            XP_LOG_INFO("Change zoom level x: {} , y: {}", mse.getOffsetX(), mse.getOffsetY());
         }
     }
 
     void PerspectiveCamera::computeDirection()
     {
+        XP_LOG_INFO("Yaw {} , Pitch {}", m_Yaw, m_Pitch);
         m_Direction.x = cos(glm::radians(m_Yaw)) * cos(glm::radians(m_Pitch));
         m_Direction.z = sin(glm::radians(m_Yaw)) * cos(glm::radians(m_Pitch));
         m_Direction.y = sin(glm::radians(m_Pitch));

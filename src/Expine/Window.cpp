@@ -25,7 +25,7 @@ namespace Expine
         int status = glfwInit();
         if (!status)
         {
-            //Do something
+            // Do something
         }
         glfwSetErrorCallback([](int error, const char *desc)
                              { XP_LOG_INFO("GLFW Error {}: {}", error, desc); });
@@ -52,18 +52,16 @@ namespace Expine
                                    {
                                        auto win = (Window *)glfwGetWindowUserPointer(w);
                                        WindowsClosedEvent e;
-                                       win->EventCallbackFunc(e);
-                                   });
+                                       win->EventCallbackFunc(e); });
 
         glfwSetWindowSizeCallback(m_Window, [](GLFWwindow *w, int width, int height)
-        {
+                                  {
             auto win = (Window *)glfwGetWindowUserPointer(w);
             WindowResizedEvent e(width,height);
             win->EventCallbackFunc(e);
-            glViewport(0,0, width, height);
-        });
+            glViewport(0,0, width, height); });
 
-        //Initialize GLEW
+        // Initialize GLEW
         glfwSetKeyCallback(m_Window, [](GLFWwindow *w, int key, int scancode, int action, int mods)
                            {
                                auto win = (Window *)glfwGetWindowUserPointer(w);
@@ -88,8 +86,7 @@ namespace Expine
                                }
                                default:
                                    break;
-                               }
-                           });
+                               } });
         glfwSetMouseButtonCallback(m_Window, [](GLFWwindow *w, int button, int action, int mods)
                                    {
                                        auto &win = *(Window *)glfwGetWindowUserPointer(w);
@@ -108,30 +105,33 @@ namespace Expine
                                            win.EventCallbackFunc(e);
                                            break;
                                        }
-                                       }
-                                   });
+                                       } });
 
         glfwSetCursorPosCallback(m_Window, [](GLFWwindow *w, double xPos, double yPos)
                                  {
                                      auto &win = *(Window *)glfwGetWindowUserPointer(w);
                                      MouseMovedEvent e(xPos, yPos);
-                                     win.EventCallbackFunc(e);
-                                 });
-        
+                                     win.EventCallbackFunc(e); });
+
+        glfwSetScrollCallback(m_Window, [](GLFWwindow *w, double xOffset, double yOffset)
+                              {
+            auto &win = *(Window *)glfwGetWindowUserPointer(w);
+            MouseScrolledEvent e(xOffset,yOffset);
+            win.EventCallbackFunc(e); });
+
         glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
         const char *glsl_version = "#version 330";
         ImGui::CreateContext();
         ImGui::StyleColorsDark();
-        //IMGUI_CHECKVERSION();
-        ImGuiIO& io = ImGui::GetIO();
-        //io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
-        //io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-        //io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
-        io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windowss
+        // IMGUI_CHECKVERSION();
+        ImGuiIO &io = ImGui::GetIO();
+        // io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
+        // io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+        // io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
+        io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable; // Enable Multi-Viewport / Platform Windowss
         ImGui_ImplGlfw_InitForOpenGL(m_Window, true);
         ImGui_ImplOpenGL3_Init(glsl_version);
-
     }
     void Window::OnUpdate()
     {
@@ -150,10 +150,10 @@ namespace Expine
         // ImGui_ImplOpenGL3_RenderDrawData( rs);
         // if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
         // {
-            // GLFWwindow* backup_current_context = glfwGetCurrentContext();
-            // ImGui::UpdatePlatformWindows();
-            // ImGui::RenderPlatformWindowsDefault();
-            // glfwMakeContextCurrent(backup_current_context);
+        // GLFWwindow* backup_current_context = glfwGetCurrentContext();
+        // ImGui::UpdatePlatformWindows();
+        // ImGui::RenderPlatformWindowsDefault();
+        // glfwMakeContextCurrent(backup_current_context);
         // }
         m_Context->SwapBuffers();
     }

@@ -27,7 +27,7 @@ namespace Expine {
         float m_MoveSpeed = 1.0f;
         float m_RotateSpeed = 30.0f;
         float m_Sensitivity = 0.1f;
-        float m_Yaw = 90.f;
+        float m_Yaw = -90.f;
         float m_Pitch = 0.f;
     };
 }
