@@ -20,6 +20,8 @@ namespace Expine {
     private:
         void computeDirection();
 
+        void recalculateProjection();
+
         glm::mat4 m_Projection;
         glm::vec3 m_Position;
         glm::vec3 m_Direction;
@@ -29,5 +31,8 @@ namespace Expine {
         float m_Sensitivity = 0.1f;
         float m_Yaw = -90.f;
         float m_Pitch = 0.f;
+        float m_FOV = 70.f;
+        float m_Width = 1.f;
+        float m_Height = 1.f;
     };
 }
