@@ -17,7 +17,7 @@ namespace Expine
 
     void PerspectiveCamera::SetPosition(float x, float y, float z)
     {
-        m_Position = glm::normalize(glm::vec3(x, y, z));
+        m_Position = glm::vec3(x, y, z);
     }
 
     glm::mat4 PerspectiveCamera::GetMatrix()
@@ -95,7 +95,6 @@ namespace Expine
         if (e.OfType(EventType::WindowResizedEvent))
         {
             auto wre = static_cast<WindowResizedEvent &>(e);
-            std::cout << "Windows resized " << wre.getWidth() << " * " << wre.getHeight() << std::endl;
             m_Width = (float)wre.getWidth();
             m_Height = (float)wre.getHeight();
             recalculateProjection();
@@ -109,13 +108,14 @@ namespace Expine
             if( m_FOV < 20 ) {
                 m_FOV = 20;
             }
-            XP_LOG_INFO("FOV {}", m_FOV);
+            //XP_LOG_INFO("FOV {}", m_FOV);
             recalculateProjection();
         }
     }
 
     void PerspectiveCamera::computeDirection()
     {
+        //XP_LOG_INFO("Yaw: {}", m_Yaw);
         m_Direction.x = cos(glm::radians(m_Yaw)) * cos(glm::radians(m_Pitch));
         m_Direction.z = sin(glm::radians(m_Yaw)) * cos(glm::radians(m_Pitch));
         m_Direction.y = sin(glm::radians(m_Pitch));

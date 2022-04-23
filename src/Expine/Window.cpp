@@ -35,7 +35,7 @@ namespace Expine
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy; should not be needed
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-        m_Window = glfwCreateWindow(960, 540, m_Title.c_str(), nullptr, nullptr);
+        m_Window = glfwCreateWindow(1920, 1080, m_Title.c_str(), nullptr, nullptr);
         if (!m_Window)
         {
             // Do something
@@ -120,6 +120,7 @@ namespace Expine
             win.EventCallbackFunc(e); });
 
         glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        glfwSetCursorPos(m_Window, 0,0);
 
         const char *glsl_version = "#version 330";
         ImGui::CreateContext();
