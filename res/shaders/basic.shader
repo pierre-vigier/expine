@@ -7,14 +7,17 @@ layout(location = 2) in vec3 vnormal;
 
 out vec3 v_Color;
 out vec3 v_Normal;
+out vec3 v_Pos;
 
-uniform mat4 u_MVP;
+uniform mat4 u_VP;
+uniform mat4 u_Model;
 
 void main()
 {
-    gl_Position = u_MVP * vec4(position, 1.0);
+    gl_Position = u_VP * u_Model * vec4(position, 1.0);
     v_Color = vcolor;
     v_Normal = vnormal;
+    v_Pos = vec3(u_Model * vec4(position, 1.0));
 }
 
 #shader fragment
@@ -24,17 +27,24 @@ layout(location = 0) out vec4 color;
 
 in vec3 v_Color;
 in vec3 v_Normal;
+in vec3 v_Pos;
 
 // uniform vec4 u_Color;
 // uniform sampler2D u_Texture;
 uniform vec3 u_LightColor;
+uniform vec3 u_LightPos;
 
 void main()
 {
     float ambientStrength = 0.1;
     vec3 ambient = ambientStrength * u_LightColor;
-    vec3 result = ambient * v_Color;
-    // vec4 texColor = texture(u_Texture,v_TexCoord);
-    // texColor = vec4(1.0,0.0,0.0,1.0);
+
+    vec3 norm = normalize(v_Normal);
+    vec3 lightDir = normalize(u_LightPos - v_Pos);
+    float diff = max(dot(norm,lightDir), 0.0);
+    vec3 diffuse = diff * u_LightColor;
+
+    vec3 result = ( ambient + diffuse) * v_Color;
+
     color = vec4( result, 1.0);
 } 

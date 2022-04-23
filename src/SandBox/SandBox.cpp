@@ -151,7 +151,7 @@ public:
         // m_Texture->Bind(0);
         //m_Shader->Bind();
         // m_Shader->SetUniform1i("u_Texture", 0);
-        m_Camera.SetPosition(1.5f,1.5f,5.f);
+        m_Camera.SetPosition(1.5f,0.f,5.f);
     }
     void OnUnmount() override
     {
@@ -172,10 +172,11 @@ public:
         glm::mat4 model = glm::mat4(1.0f);
         model = glm::translate(model, translation);
         model = glm::rotate(model, Angle, glm::vec3(1.0f, 1.0f, 0.0f));
-        glm::mat4 mvp = viewProjection * model;
         m_Shader->Bind();
-        m_Shader->SetUniformMat4f("u_MVP", mvp);
+        m_Shader->SetUniformMat4f("u_VP", viewProjection);
+        m_Shader->SetUniformMat4f("u_Model", model);
         m_Shader->SetUniformVec3f("u_LightColor", glm::vec3(1.f, 1.0f, 1.f));
+        m_Shader->SetUniformVec3f("u_LightPos", lightPos);
         Renderer::Submit(*m_Va, *m_Shader);
 
         glm::mat4 mMatrix = glm::mat4(1.0f);
