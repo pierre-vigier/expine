@@ -31,7 +31,10 @@ uniform vec3 u_LightColor;
 
 void main()
 {
+    float ambientStrength = 0.1;
+    vec3 ambient = ambientStrength * u_LightColor;
+    vec3 result = ambient * v_Color;
     // vec4 texColor = texture(u_Texture,v_TexCoord);
     // texColor = vec4(1.0,0.0,0.0,1.0);
-    color = vec4(v_Color * u_LightColor, 1.0);
+    color = vec4( result, 1.0);
 } 

@@ -65,24 +65,31 @@ public:
             glm::vec3(0.5f, 0.5f, 0.5f),
             glm::vec3(1.0f, 0.5f, 0.31f),
             glm::vec2(0.0f, 0.0f),
+
             glm::vec3(-0.5f, 0.5f, -0.5f),
             glm::vec3(1.0f, 0.5f, 0.31f),
             glm::vec2(1.0f, 0.0f),
+
             glm::vec3(-0.5f, 0.5f, 0.5f),
             glm::vec3(1.0f, 0.5f, 0.31f),
             glm::vec2(1.0f, 1.0f),
+
             glm::vec3(0.5f, -0.5f, -0.5f),
             glm::vec3(1.0f, 0.5f, 0.31f),
             glm::vec2(0.0f, 1.0f),
+
             glm::vec3(-0.5f, -0.5f, -0.5f),
             glm::vec3(1.0f, 0.5f, 0.31f),
             glm::vec2(0.0f, 0.0f),
+
             glm::vec3(0.5f, 0.5f, -0.5f),
             glm::vec3(1.0f, 0.5f, 0.31f),
             glm::vec2(1.0f, 0.0f),
+
             glm::vec3(0.5f, -0.5f, 0.5f),
             glm::vec3(1.0f, 0.5f, 0.31f),
             glm::vec2(1.0f, 1.0f),
+
             glm::vec3(-0.5f, -0.5f, 0.5f),
             glm::vec3(1.0f, 0.5f, 0.31f),
             glm::vec2(0.0f, 1.0f),
@@ -172,7 +179,7 @@ public:
         glm::mat4 mvp = viewProjection * model;
         m_Shader->Bind();
         m_Shader->SetUniformMat4f("u_MVP", mvp);
-        m_Shader->SetUniformVec3f("u_LightColor", glm::vec3(0.f, 1.0f, 0.f));
+        m_Shader->SetUniformVec3f("u_LightColor", glm::vec3(1.f, 1.0f, 1.f));
         Renderer::Submit(*m_Va, *m_Shader);
 
         glm::mat4 mMatrix = glm::mat4(1.0f);
