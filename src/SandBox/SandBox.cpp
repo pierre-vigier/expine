@@ -23,6 +23,22 @@ struct Vertex
     }
 };
 
+struct VertexNormal
+{
+    glm::vec3 position;
+    glm::vec3 color;
+    glm::vec3 normal;
+
+    static VertexBufferLayout getLayout()
+    {
+        VertexBufferLayout layout;
+        layout.PushFloat(3);
+        layout.PushFloat(3);
+        layout.PushFloat(3);
+        return layout;
+    }
+};
+
 class MyLayer : public Expine::Layer
 {
 public:
@@ -31,68 +47,48 @@ public:
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glEnable(GL_CULL_FACE);
-        //glFrontFace(GL_CW);
+        glFrontFace(GL_CCW);
         glCullFace(GL_BACK);
         glEnable(GL_DEPTH_TEST);
 
-        // Vertex positions[8] = {
-        //     glm::vec3(0.5f, 0.5f, 0.5f),
-        //     glm::vec3(0.0f, 1.0f, 0.0f),
-        //     glm::vec2(0.0f, 0.0f),
-        //     glm::vec3(-0.5f, 0.5f, -0.5f),
-        //     glm::vec3(1.0f, 0.0f, 0.0f),
-        //     glm::vec2(1.0f, 0.0f),
-        //     glm::vec3(-0.5f, 0.5f, 0.5f),
-        //     glm::vec3(0.0f, 0.0f, 1.0f),
-        //     glm::vec2(1.0f, 1.0f),
-        //     glm::vec3(0.5f, -0.5f, -0.5f),
-        //     glm::vec3(1.0f, 1.0f, 0.0f),
-        //     glm::vec2(0.0f, 1.0f),
-        //     glm::vec3(-0.5f, -0.5f, -0.5f),
-        //     glm::vec3(0.0f, 1.0f, 1.0f),
-        //     glm::vec2(0.0f, 0.0f),
-        //     glm::vec3(0.5f, 0.5f, -0.5f),
-        //     glm::vec3(1.0f, 0.0f, 1.0f),
-        //     glm::vec2(1.0f, 0.0f),
-        //     glm::vec3(0.5f, -0.5f, 0.5f),
-        //     glm::vec3(1.0f, 1.0f, 1.0f),
-        //     glm::vec2(1.0f, 1.0f),
-        //     glm::vec3(-0.5f, -0.5f, 0.5f),
-        //     glm::vec3(0.0f, 0.0f, 0.0f),
-        //     glm::vec2(0.0f, 1.0f),
-        // };
-        Vertex positions[8] = {
-            glm::vec3(0.5f, 0.5f, 0.5f),
-            glm::vec3(1.0f, 0.5f, 0.31f),
-            glm::vec2(0.0f, 0.0f),
+        VertexNormal cubePositions[24] = { 
+    glm::vec3(-0.5f, -0.5f, -0.5f),  glm::vec3(1.f,0.5f,0.31f), glm::vec3(0.0f,  0.0f, -1.0f), //0
+    glm::vec3( 0.5f, -0.5f, -0.5f),  glm::vec3(1.f,0.5f,0.31f), glm::vec3(0.0f,  0.0f, -1.0f), //1
+    glm::vec3( 0.5f,  0.5f, -0.5f),  glm::vec3(1.f,0.5f,0.31f), glm::vec3(0.0f,  0.0f, -1.0f), //2
+    glm::vec3(-0.5f,  0.5f, -0.5f),  glm::vec3(1.f,0.5f,0.31f), glm::vec3(0.0f,  0.0f, -1.0f), //3
+    
+    glm::vec3(-0.5f, -0.5f,  0.5f),  glm::vec3(1.f,0.5f,0.31f), glm::vec3(0.0f,  0.0f, 1.0f), //4
+    glm::vec3( 0.5f, -0.5f,  0.5f),  glm::vec3(1.f,0.5f,0.31f), glm::vec3(0.0f,  0.0f, 1.0f), //5
+    glm::vec3( 0.5f,  0.5f,  0.5f),  glm::vec3(1.f,0.5f,0.31f), glm::vec3(0.0f,  0.0f, 1.0f), //6
+    glm::vec3(-0.5f,  0.5f,  0.5f),  glm::vec3(1.f,0.5f,0.31f), glm::vec3(0.0f,  0.0f, 1.0f), //7
 
-            glm::vec3(-0.5f, 0.5f, -0.5f),
-            glm::vec3(1.0f, 0.5f, 0.31f),
-            glm::vec2(1.0f, 0.0f),
+    glm::vec3(-0.5f, -0.5f, -0.5f),  glm::vec3(1.f,0.5f,0.31f), glm::vec3(0.0f, -1.0f, 0.0f), //8
+    glm::vec3( 0.5f, -0.5f, -0.5f),  glm::vec3(1.f,0.5f,0.31f), glm::vec3(0.0f, -1.0f, 0.0f), //9
+    glm::vec3( 0.5f, -0.5f,  0.5f),  glm::vec3(1.f,0.5f,0.31f), glm::vec3(0.0f, -1.0f, 0.0f), //10
+    glm::vec3(-0.5f, -0.5f,  0.5f),  glm::vec3(1.f,0.5f,0.31f), glm::vec3(0.0f, -1.0f, 0.0f), //11
 
-            glm::vec3(-0.5f, 0.5f, 0.5f),
-            glm::vec3(1.0f, 0.5f, 0.31f),
-            glm::vec2(1.0f, 1.0f),
+    glm::vec3(-0.5f,  0.5f, -0.5f),  glm::vec3(1.f,0.5f,0.31f), glm::vec3(0.0f,  1.0f, 0.0f), //12
+    glm::vec3( 0.5f,  0.5f, -0.5f),  glm::vec3(1.f,0.5f,0.31f), glm::vec3(0.0f,  1.0f, 0.0f), //13
+    glm::vec3( 0.5f,  0.5f,  0.5f),  glm::vec3(1.f,0.5f,0.31f), glm::vec3(0.0f,  1.0f, 0.0f), //14
+    glm::vec3(-0.5f,  0.5f,  0.5f),  glm::vec3(1.f,0.5f,0.31f), glm::vec3(0.0f,  1.0f, 0.0f), //15
 
-            glm::vec3(0.5f, -0.5f, -0.5f),
-            glm::vec3(1.0f, 0.5f, 0.31f),
-            glm::vec2(0.0f, 1.0f),
+    glm::vec3(-0.5f,  0.5f,  0.5f),  glm::vec3(1.f,0.5f,0.31f), glm::vec3(-1.0f,  0.0f, 0.0f), //16
+    glm::vec3(-0.5f,  0.5f, -0.5f),  glm::vec3(1.f,0.5f,0.31f), glm::vec3(-1.0f,  0.0f, 0.0f), //17
+    glm::vec3(-0.5f, -0.5f, -0.5f),  glm::vec3(1.f,0.5f,0.31f), glm::vec3(-1.0f,  0.0f, 0.0f), //18
+    glm::vec3(-0.5f, -0.5f,  0.5f),  glm::vec3(1.f,0.5f,0.31f), glm::vec3(-1.0f,  0.0f, 0.0f), //19
 
-            glm::vec3(-0.5f, -0.5f, -0.5f),
-            glm::vec3(1.0f, 0.5f, 0.31f),
-            glm::vec2(0.0f, 0.0f),
-
-            glm::vec3(0.5f, 0.5f, -0.5f),
-            glm::vec3(1.0f, 0.5f, 0.31f),
-            glm::vec2(1.0f, 0.0f),
-
-            glm::vec3(0.5f, -0.5f, 0.5f),
-            glm::vec3(1.0f, 0.5f, 0.31f),
-            glm::vec2(1.0f, 1.0f),
-
-            glm::vec3(-0.5f, -0.5f, 0.5f),
-            glm::vec3(1.0f, 0.5f, 0.31f),
-            glm::vec2(0.0f, 1.0f),
+    glm::vec3(0.5f,  0.5f,  0.5f),   glm::vec3(1.f,0.5f,0.31f), glm::vec3(1.0f,  0.0f, 0.0f), //20
+    glm::vec3(0.5f,  0.5f, -0.5f),   glm::vec3(1.f,0.5f,0.31f), glm::vec3(1.0f,  0.0f, 0.0f), //21
+    glm::vec3(0.5f, -0.5f, -0.5f),   glm::vec3(1.f,0.5f,0.31f), glm::vec3(1.0f,  0.0f, 0.0f), //22
+    glm::vec3(0.5f, -0.5f,  0.5f),   glm::vec3(1.f,0.5f,0.31f), glm::vec3(1.0f,  0.0f, 0.0f), //23
+};
+        unsigned int cubeIndices[36] = {
+            0,2,1,0,3,2, //back face with normal
+            4,5,6,6,7,4, //front face with normal
+            8,9,10,10,11,8,//bottom face with normal
+            12,14,13,12,15,14,//top face with normal
+            16,17,18,18,19,16,//left face with normal
+            20,22,21,20,23,22,//right face with normal
         };
         Vertex lightPositions[8] = {
             glm::vec3(0.5f, 0.5f, 0.5f),
@@ -120,7 +116,7 @@ public:
             glm::vec3(1.f, 1.f, 1.f),
             glm::vec2(0.0f, 0.0f),
         };
-        unsigned int indices[36] = {
+        unsigned int lightIndices[36] = {
             0, 1, 2,
             1, 3, 4,
             5, 6, 3,
@@ -136,14 +132,14 @@ public:
 
         m_Va = std::make_shared<VertexArray>();
         m_lightVa = std::make_shared<VertexArray>();
-        m_Vb = std::make_shared<VertexBuffer>(positions, 8 * sizeof(Vertex));
+        m_Vb = std::make_shared<VertexBuffer>(cubePositions, sizeof(cubePositions));
         m_lightVb = std::make_shared<VertexBuffer>(lightPositions, 8 * sizeof(Vertex));
 
-        m_Va->AddBuffer(*m_Vb, Vertex::getLayout());
+        m_Va->AddBuffer(*m_Vb, VertexNormal::getLayout());
         m_lightVa->AddBuffer(*m_lightVb, Vertex::getLayout());
 
-        m_Ib = std::make_shared<IndexBuffer>(indices, 36);
-        m_lightIb = std::make_shared<IndexBuffer>(indices, 36);
+        m_Ib = std::make_shared<IndexBuffer>(cubeIndices, sizeof(cubeIndices) / sizeof(unsigned int));
+        m_lightIb = std::make_shared<IndexBuffer>(lightIndices, 36);
 
         m_Va->SetIndexBuffer(m_Ib);
         m_lightVa->SetIndexBuffer(m_lightIb);
@@ -155,7 +151,7 @@ public:
         // m_Texture->Bind(0);
         //m_Shader->Bind();
         // m_Shader->SetUniform1i("u_Texture", 0);
-        m_Camera.SetPosition(0.f,0.f,5.f);
+        m_Camera.SetPosition(1.5f,1.5f,5.f);
     }
     void OnUnmount() override
     {

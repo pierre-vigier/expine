@@ -63,7 +63,7 @@ namespace Expine
         static float lastMy = mPos.y;
         float xOffset = mPos.x - lastMx;
         lastMx = mPos.x;
-        m_Yaw += xOffset * m_Sensitivity;
+        //m_Yaw += xOffset * m_Sensitivity;
         if (m_Yaw > 180)
         {
             m_Yaw -= 360;
@@ -74,7 +74,7 @@ namespace Expine
         }
         float yOffset = mPos.y - lastMy;
         lastMy = mPos.y;
-        m_Pitch -= yOffset * m_Sensitivity;
+        //m_Pitch -= yOffset * m_Sensitivity;
         if (m_Pitch > 89)
         {
             m_Pitch = 89;
