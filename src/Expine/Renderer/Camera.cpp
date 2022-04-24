@@ -30,6 +30,14 @@ namespace Expine
     {
         glm::vec3 move = m_Direction;
         move.y = 0;
+        if (Input::IsKeyPressed(GLFW_KEY_R))
+        {
+            m_Position += m_Up * m_MoveSpeed * elapsed;
+        }
+        if (Input::IsKeyPressed(GLFW_KEY_F))
+        {
+            m_Position -= m_Up * m_MoveSpeed * elapsed;
+        }
         if (Input::IsKeyPressed(GLFW_KEY_W))
         {
             m_Position += move * m_MoveSpeed * elapsed;

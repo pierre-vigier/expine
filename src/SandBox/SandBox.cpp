@@ -177,6 +177,7 @@ public:
         m_Shader->SetUniformMat4f("u_Model", model);
         m_Shader->SetUniformVec3f("u_LightColor", glm::vec3(1.f, 1.0f, 1.f));
         m_Shader->SetUniformVec3f("u_LightPos", lightPos);
+        m_Shader->SetUniformVec3f("u_ViewPos", m_Camera.GetPosition());
         Renderer::Submit(*m_Va, *m_Shader);
 
         glm::mat4 mMatrix = glm::mat4(1.0f);

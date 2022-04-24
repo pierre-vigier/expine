@@ -17,6 +17,8 @@ namespace Expine {
         void OnUpdate(float elapsed);
 
         void HandleEvent(Event &e);
+
+        glm::vec3 GetPosition() { return m_Position; }
     private:
         void computeDirection();
 

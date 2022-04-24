@@ -34,10 +34,13 @@ in vec3 v_Pos;
 // uniform sampler2D u_Texture;
 uniform vec3 u_LightColor;
 uniform vec3 u_LightPos;
+uniform vec3 u_ViewPos;
 
 void main()
 {
     float ambientStrength = 0.1;
+    float specularStrength = 0.5;
+
     vec3 ambient = ambientStrength * u_LightColor;
 
     vec3 norm = normalize(v_Normal);
@@ -45,7 +48,12 @@ void main()
     float diff = max(dot(norm,lightDir), 0.0);
     vec3 diffuse = diff * u_LightColor;
 
-    vec3 result = ( ambient + diffuse) * v_Color;
+    vec3 viewDir = normalize(u_ViewPos - v_Pos);
+    vec3 reflectDir = reflect(-lightDir, norm);
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
+    vec3 specular = specularStrength * spec * u_LightColor;  
+
+    vec3 result = ( ambient + diffuse + specular ) * v_Color;
 
     color = vec4( result, 1.0);
 } 
