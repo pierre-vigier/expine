@@ -159,10 +159,17 @@ public:
     void OnUpdate(float elapsed) override
     {
         m_Camera.OnUpdate(elapsed);
-        static float Angle = 0.0f;
-        Angle += 0.01f;
+        static float Angle = 1.0f;
+        Angle -= 0.02f;
         Angle = fmod(Angle, glm::two_pi<float>());
+        static float lightAngle = 0.0f;
+        lightAngle += 0.01f;
+        lightAngle = fmod(lightAngle, glm::two_pi<float>());
         glm::vec3 lightPos{2.f,1.f,0.f};
+        lightPos = glm::vec3(
+            glm::rotate(glm::mat4(1.f),lightAngle,glm::vec3(0.0,1.0,0.0))
+            * glm::vec4(lightPos, 1.f)
+        );
 
         //glm::mat4 proj = glm::ortho(-2.f, 2.f, -2.f, 2.f, -0.0f, 1.0f);
         //glm::mat4 proj = glm::perspective(90.0f, 960.f/540.f, 0.1f, 100.0f);
